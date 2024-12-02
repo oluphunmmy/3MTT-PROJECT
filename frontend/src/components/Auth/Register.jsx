@@ -13,25 +13,25 @@ const Register = () => {
   });
 
   const [errors, setErrors] = useState({});
-  // const [isCountdownActive, setIsCountdownActive] = useState(true);
-  // const [countdown, setCountdown] = useState(60); // Countdown timer in seconds
+  const [isCountdownActive, setIsCountdownActive] = useState(true);
+  const [countdown, setCountdown] = useState(60); // Countdown timer in seconds
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   let timer;
-  //   if (isCountdownActive) {
-  //     timer = setInterval(() => {
-  //       setCountdown((prev) => {
-  //         if (prev <= 1) {
-  //           clearInterval(timer);
-  //           window.location.reload(); // Reload the page when countdown ends
-  //         }
-  //         return prev - 1;
-  //       });
-  //     }, 1000);
-  //   }
-  //   return () => clearInterval(timer); // Clean up interval on component unmount
-  // }, [isCountdownActive]);
+  useEffect(() => {
+    let timer;
+    if (isCountdownActive) {
+      timer = setInterval(() => {
+        setCountdown((prev) => {
+          if (prev <= 1) {
+            clearInterval(timer);
+            window.location.reload(); // Reload the page when countdown ends
+          }
+          return prev - 1;
+        });
+      }, 5000);
+    }
+    return () => clearInterval(timer); // Clean up interval on component unmount
+  }, [isCountdownActive]);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -62,17 +62,17 @@ const Register = () => {
       setErrors({ general: "Registration failed. Please try again." });
 
       // Start the countdown if the server might be sleeping
-      // setIsCountdownActive(true);
+      setIsCountdownActive(true);
     }
   };
 
   return (
     <div className="max-w-md mx-auto mt-10">
-      {/* {isCountdownActive && (
+     {isCountdownActive && (
         <div className="mb-4 p-4 bg-yellow-100 text-yellow-800 border border-yellow-300 rounded">
           Kindly wait, the server is sleeping, try again in... {countdown} seconds, kindly continue after first countdown is reached
         </div>
-      )} */}
+      )}
       <form
         onSubmit={handleSubmit}
         className="p-6 bg-white shadow-lg rounded-lg border border-gray-300"
